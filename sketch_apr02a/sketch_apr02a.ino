@@ -7,6 +7,27 @@ int Ctrig = 8;
 int Cecho = 9;
 int Ltrig = 7;
 int Lecho = 10;
+
+long int Rdistance = 0;
+long int Cdistance = 0;
+long int Ldistance = 0;
+void detectAllDistance()
+{
+  Rdistance = detectDistance(Rtrig, Recho);
+  /*Serial.print("right ");
+  Serial.print(Rdistance);
+  Serial.println(" cm");*/
+
+  Cdistance = detectDistance(Ctrig, Cecho);
+  /*Serial.print("center ");
+  Serial.print(Cdistance);
+  Serial.println(" cm");
+*/
+  Ldistance = detectDistance(Ltrig, Lecho);
+  /*Serial.print("left ");
+  Serial.print(Ldistance);
+  Serial.println(" cm");*/
+}
 void setup()
 {
   // put your setup code here, to run once:
@@ -38,18 +59,39 @@ void loop()
   // delay(2000);
 
   // test ultra sensor code
-  long int Rdistance = detectDistance(Rtrig, Recho);
-  /* Serial.print("right ");
-  Serial.print(Rdistance);
-  Serial.println(" cm");*/
 
-  long int Cdistance = detectDistance(Ctrig, Cecho);
-  /*  Serial.print("center ");
-  Serial.print(Cdistance);
-  Serial.println(" cm");*/
+  detectAllDistance();
 
-  long int Ldistance = detectDistance(Ltrig, Lecho);
-  /* Serial.print("left ");
-  Serial.print(Ldistance);
-  Serial.println(" cm");*/
+  if (Cdistance < 5)
+  {
+    Serial.println("center distance <<<<<<<<<8");
+    // has something in front of the car
+    if (Ldistance > Rdistance)
+    {
+      while (Cdistance < 5)
+      {
+        Serial.println("at back left");
+        leftMotorMoveBack(255);
+        rightMotorMoveFont(0);
+        detectAllDistance();
+      }
+    }
+    else
+    {
+      while (Cdistance < 5)
+      {
+        Serial.println("at back right");
+        rightMotorMoveBack(255);
+        leftMotorMoveBack(0);
+        detectAllDistance();
+      }
+    }
+  }
+  else
+  {
+    Serial.println("Normal mode");
+    // nothing in front of the car
+    leftMotorMoveFont(map(Rdistance, 0, 100, 50, 255));
+    rightMotorMoveFont(map(Ldistance, 0, 100, 50, 255));
+  }
 }

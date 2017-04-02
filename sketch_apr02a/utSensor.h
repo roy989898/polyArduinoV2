@@ -31,5 +31,10 @@ long int detectDistance(int trig, int echo)
     long int duration = hearEcho(echo);
     long int distance = microToCm(duration);
 
-    return distance;
+    if (distance < 0)
+        return 0;
+    else if (distance > 100)
+        return 100;
+    else
+        return distance;
 }
