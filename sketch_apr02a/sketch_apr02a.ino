@@ -1,15 +1,23 @@
 #include "motor.h"
 #include "utSensor.h"
 
-int trig=2;
-int echo=3;
+int Rtrig=2;
+int Recho=3;
+int Ctrig=8;
+int Cecho=9;
+int Ltrig=7;
+int Lecho=10;
 void setup()
 {
   // put your setup code here, to run once:
   // pinMode(13, OUTPUT);
   setupMotor();
-  pinMode(trig, OUTPUT);
-  pinMode(echo, INPUT);
+  pinMode(Rtrig, OUTPUT);
+  pinMode(Recho, INPUT);
+   pinMode(Ctrig, OUTPUT);
+  pinMode(Cecho, INPUT);
+  pinMode(Ltrig, OUTPUT);
+  pinMode(Lecho, INPUT);
   Serial.begin(9600);  
 }
 
@@ -30,8 +38,20 @@ void loop()
   // delay(2000);
 
   // test ultra sensor code
-  long int distance=detectDistance(trig,echo);
-  Serial.print(distance);
+  long int Rdistance=detectDistance(Rtrig,Recho);
+  Serial.print("right ");
+  Serial.print(Rdistance);
   Serial.println(" cm");
-  delay(1000);   
+
+  long int Cdistance=detectDistance(Ctrig,Cecho);
+  Serial.print("center ");
+  Serial.print(Cdistance);
+  Serial.println(" cm");
+  
+
+  long int Ldistance=detectDistance(Ltrig,Lecho);
+  Serial.print("left ");
+  Serial.print(Ldistance);
+  Serial.println(" cm");
+  delay(1000);
 }
