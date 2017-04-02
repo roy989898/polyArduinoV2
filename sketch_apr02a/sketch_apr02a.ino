@@ -39,19 +39,21 @@ void loop()
 
   // test ultra sensor code
   long int Rdistance=detectDistance(Rtrig,Recho);
-  Serial.print("right ");
-  Serial.print(Rdistance);
-  Serial.println(" cm");
+  // Serial.print("right ");
+  // Serial.print(Rdistance);
+  // Serial.println(" cm");
 
   long int Cdistance=detectDistance(Ctrig,Cecho);
-  Serial.print("center ");
-  Serial.print(Cdistance);
-  Serial.println(" cm");
+  // Serial.print("center ");
+  // Serial.print(Cdistance);
+  // Serial.println(" cm");
   
 
   long int Ldistance=detectDistance(Ltrig,Lecho);
-  Serial.print("left ");
-  Serial.print(Ldistance);
-  Serial.println(" cm");
-  delay(1000);
+  // Serial.print("left ");
+  // Serial.print(Ldistance);
+  // Serial.println(" cm");
+
+
+
 }
