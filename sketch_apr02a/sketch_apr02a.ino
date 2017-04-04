@@ -1,5 +1,7 @@
 #include "motor.h"
 #include "utSensor.h"
+#include <BH1750FVI.h> // Sensor Library
+#include <Wire.h>      // I2C Library
 
 int Rtrig = 2;
 int Recho = 3;
@@ -15,18 +17,55 @@ void detectAllDistance()
 {
   Rdistance = detectDistance(Rtrig, Recho);
   /*Serial.print("right ");
-  Serial.print(Rdistance);
-  Serial.println(" cm");*/
+    Serial.print(Rdistance);
+    Serial.println(" cm");*/
 
   Cdistance = detectDistance(Ctrig, Cecho);
   /*Serial.print("center ");
-  Serial.print(Cdistance);
-  Serial.println(" cm");
-*/
+    Serial.print(Cdistance);
+    Serial.println(" cm");
+  */
   Ldistance = detectDistance(Ltrig, Lecho);
   /*Serial.print("left ");
-  Serial.print(Ldistance);
-  Serial.println(" cm");*/
+    Serial.print(Ldistance);
+    Serial.println(" cm");*/
+}
+
+void decideTheAvoidMotion(long int Ldistance, long int Cdistance, long int Rdistance)
+{
+
+  if (Cdistance < 8)
+  {
+    Serial.println("center distance <<<<<<<<<8");
+    // has something in front of the car
+    if (Ldistance > Rdistance)
+    {
+      while (Cdistance < 8)
+      {
+        Serial.println("at back left");
+        leftMotorMoveBack(255);
+        rightMotorMoveFont(0);
+        detectAllDistance();
+      }
+    }
+    else
+    {
+      while (Cdistance < 8)
+      {
+        Serial.println("at back right");
+        rightMotorMoveBack(255);
+        leftMotorMoveBack(0);
+        detectAllDistance();
+      }
+    }
+  }
+  else
+  {
+    Serial.println("Normal mode");
+    // nothing in front of the car
+    leftMotorMoveFont(map(Rdistance, 0, 100, 50, 255));
+    rightMotorMoveFont(map(Ldistance, 0, 100, 50, 255));
+  }
 }
 void setup()
 {
@@ -60,38 +99,6 @@ void loop()
 
   // test ultra sensor code
 
-  detectAllDistance();
-
-  if (Cdistance < 5)
-  {
-    Serial.println("center distance <<<<<<<<<8");
-    // has something in front of the car
-    if (Ldistance > Rdistance)
-    {
-      while (Cdistance < 5)
-      {
-        Serial.println("at back left");
-        leftMotorMoveBack(255);
-        rightMotorMoveFont(0);
-        detectAllDistance();
-      }
-    }
-    else
-    {
-      while (Cdistance < 5)
-      {
-        Serial.println("at back right");
-        rightMotorMoveBack(255);
-        leftMotorMoveBack(0);
-        detectAllDistance();
-      }
-    }
-  }
-  else
-  {
-    Serial.println("Normal mode");
-    // nothing in front of the car
-    leftMotorMoveFont(map(Rdistance, 0, 100, 50, 255));
-    rightMotorMoveFont(map(Ldistance, 0, 100, 50, 255));
-  }
+  /*  detectAllDistance();
+  decideTheAvoidMotion(Ldistance, Cdistance, Rdistance);*/
 }
