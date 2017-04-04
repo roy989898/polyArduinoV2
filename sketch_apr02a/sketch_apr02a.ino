@@ -79,7 +79,7 @@ void setup()
   pinMode(Lecho, INPUT);
   Serial.begin(9600);
 
-  lightSensorSetUp();
+ lightSensorSetUp();
 }
 
 void loop()
@@ -103,7 +103,12 @@ void loop()
   /*  detectAllDistance();
   decideTheAvoidMotion(Ldistance, Cdistance, Rdistance);*/
 
-  uint16_t lux = getLightLux();
-  Serial.print("lux");
-  Serial.println(lux);
+  // uint16_t rlux = getRightLightLux();
+  // Serial.print("right lux");
+  // Serial.print(rlux);
+  // Serial.print(" ||||||||  ");
+
+ uint16_t llux = getLeftLightLux();
+ Serial.print("left lux ");
+ Serial.println(llux);
 }
