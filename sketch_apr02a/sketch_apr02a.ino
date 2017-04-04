@@ -1,6 +1,7 @@
 #include "motor.h"
 #include "utSensor.h"
-#include "lightSensor.h" // Sensor Library
+// #include "lightSensor.h" // Sensor Library
+#include "lightSensorV2.h"
 
 int Rtrig = 2;
 int Recho = 3;
@@ -70,6 +71,7 @@ void setup()
 {
   // put your setup code here, to run once:
   // pinMode(13, OUTPUT);
+  lightv2Setup();
   setupMotor();
   pinMode(Rtrig, OUTPUT);
   pinMode(Recho, INPUT);
@@ -79,7 +81,7 @@ void setup()
   pinMode(Lecho, INPUT);
   Serial.begin(9600);
 
-  lightSensorSetUp();
+  // lightSensorSetUp();
 }
 
 void loop()
@@ -103,7 +105,5 @@ void loop()
   /*  detectAllDistance();
   decideTheAvoidMotion(Ldistance, Cdistance, Rdistance);*/
 
-  uint16_t lux = getLightLux();
-  Serial.print("lux");
-  Serial.println(lux);
+  lightv2Show();
 }
