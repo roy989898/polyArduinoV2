@@ -1,7 +1,6 @@
 #include "motor.h"
 #include "utSensor.h"
-#include <BH1750FVI.h> // Sensor Library
-#include <Wire.h>      // I2C Library
+#include "lightSensor.h" // Sensor Library
 
 int Rtrig = 2;
 int Recho = 3;
@@ -79,6 +78,8 @@ void setup()
   pinMode(Ltrig, OUTPUT);
   pinMode(Lecho, INPUT);
   Serial.begin(9600);
+
+  lightSensorSetUp();
 }
 
 void loop()
@@ -101,4 +102,8 @@ void loop()
 
   /*  detectAllDistance();
   decideTheAvoidMotion(Ldistance, Cdistance, Rdistance);*/
+
+  uint16_t lux = getLightLux();
+  Serial.print("lux");
+  Serial.println(lux);
 }
