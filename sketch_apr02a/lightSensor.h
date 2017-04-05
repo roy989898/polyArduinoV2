@@ -48,3 +48,23 @@ uint16_t getrightLightSensorLux()
   lux = map(lux, 0, 300, 0, 100);
   return lux;
 }
+
+int getMapedLeftLightSensorLux()
+{
+  int lux = getLeftLightSensorLux();
+  int mapedLux = map(lux, 0, 100, 0, 255);
+  if (mapedLux >= 255)
+    return 255;
+  else
+    return mapedLux;
+}
+
+int getMapedRightLightSensorLux()
+{
+  int lux = getrightLightSensorLux();
+  int mapedLux = map(lux, 0, 100, 0, 255);
+  if (mapedLux >= 255)
+    return 255;
+  else
+    return mapedLux;
+}
