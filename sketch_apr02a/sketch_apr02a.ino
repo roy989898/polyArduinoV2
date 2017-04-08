@@ -12,6 +12,10 @@ int Lecho = 10;
 long int Rdistance = 0;
 long int Cdistance = 0;
 long int Ldistance = 0;
+
+int leftLightLuxMapped = 0;
+int rightLightLuxMapped = 0;
+
 void detectAllDistance()
 {
   Rdistance = detectDistance(Rtrig, Recho);
@@ -32,6 +36,11 @@ void detectAllDistance()
 
 void decideTheAvoidMotion()
 {
+  if (leftLightLuxMapped > 110 || rightLightLuxMapped > 110)
+  {
+    motorStop();
+    return;
+  }
 
   if (Cdistance < 8)
   {
@@ -76,6 +85,15 @@ void decideTheAvoidMotion()
     }
   }
 }
+
+void detectTheLightInstance()
+{
+  /*  Serial.print(getMapedLeftLightSensorLux());
+  Serial.print(" ");
+  Serial.println(getMapedRightLightSensorLux());*/
+  leftLightLuxMapped = getMapedLeftLightSensorLux();
+  rightLightLuxMapped = getMapedRightLightSensorLux();
+}
 void setup()
 {
   // put your setup code here, to run once:
@@ -109,10 +127,7 @@ void loop()
 
   // test ultra sensor code
 
+  detectTheLightInstance();
   detectAllDistance();
   decideTheAvoidMotion();
-
-  /*  Serial.print(getMapedLeftLightSensorLux());
-  Serial.print(" ");
-  Serial.println(getMapedRightLightSensorLux());*/
 }
