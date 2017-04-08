@@ -15,22 +15,22 @@ long int Ldistance = 0;
 void detectAllDistance()
 {
   Rdistance = detectDistance(Rtrig, Recho);
-  /*Serial.print("right ");
-    Serial.print(Rdistance);
-    Serial.println(" cm");*/
+  Serial.print("right ");
+  Serial.print(Rdistance);
+  Serial.print(" cm");
 
   Cdistance = detectDistance(Ctrig, Cecho);
-  /*Serial.print("center ");
-    Serial.print(Cdistance);
-    Serial.println(" cm");
-  */
+  Serial.print(" center ");
+  Serial.print(Cdistance);
+  Serial.print(" cm");
+
   Ldistance = detectDistance(Ltrig, Lecho);
-  /*Serial.print("left ");
-    Serial.print(Ldistance);
-    Serial.println(" cm");*/
+  Serial.print(" left ");
+  Serial.print(Ldistance);
+  Serial.println(" cm");
 }
 
-void decideTheAvoidMotion(long int Ldistance, long int Cdistance, long int Rdistance)
+void decideTheAvoidMotion()
 {
 
   if (Cdistance < 8)
@@ -62,8 +62,18 @@ void decideTheAvoidMotion(long int Ldistance, long int Cdistance, long int Rdist
   {
     Serial.println("Normal mode");
     // nothing in front of the car
-    leftMotorMoveFont(map(Rdistance, 0, 100, 50, 255));
-    rightMotorMoveFont(map(Ldistance, 0, 100, 50, 255));
+    int leftPMW = map(Rdistance, 0, 100, 50, 255);
+    int rightPMW = map(Ldistance, 0, 100, 50, 255);
+    if (leftPMW < 70 && rightPMW < 70)
+    {
+      leftMotorMoveFont(200);
+      rightMotorMoveFont(200);
+    }
+    else
+    {
+      leftMotorMoveFont(leftPMW);
+      rightMotorMoveFont(rightPMW);
+    }
   }
 }
 void setup()
@@ -99,10 +109,10 @@ void loop()
 
   // test ultra sensor code
 
-  /*  detectAllDistance();
-  decideTheAvoidMotion(Ldistance, Cdistance, Rdistance);*/
+  detectAllDistance();
+  decideTheAvoidMotion();
 
-    Serial.print(getMapedLeftLightSensorLux());
+  /*  Serial.print(getMapedLeftLightSensorLux());
   Serial.print(" ");
-  Serial.println(getMapedRightLightSensorLux());
+  Serial.println(getMapedRightLightSensorLux());*/
 }
