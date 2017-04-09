@@ -19,19 +19,19 @@ int rightLightLuxMapped = 0;
 void detectAllDistance()
 {
   Rdistance = detectDistance(Rtrig, Recho);
-  /*Serial.print("right ");
+  Serial.print("right ");
   Serial.print(Rdistance);
-  Serial.print(" cm");*/
+  Serial.print(" cm");
 
   Cdistance = detectDistance(Ctrig, Cecho);
-  /*  Serial.print(" center ");
+  Serial.print(" center ");
   Serial.print(Cdistance);
-  Serial.print(" cm");*/
+  Serial.print(" cm");
 
   Ldistance = detectDistance(Ltrig, Lecho);
-  /* Serial.print(" left ");
+  Serial.print(" left ");
   Serial.print(Ldistance);
-  Serial.println(" cm");*/
+  Serial.println(" cm");
 }
 
 void decideTheAvoidMotion()
@@ -48,7 +48,7 @@ void decideTheAvoidMotion()
     // has something in front of the car
     if (Ldistance > Rdistance)
     {
-      while (Cdistance < 8)
+      while (Cdistance < 12)
       {
         // Serial.println("at back left");
         leftMotorMoveBack(255);
@@ -58,7 +58,7 @@ void decideTheAvoidMotion()
     }
     else
     {
-      while (Cdistance < 8)
+      while (Cdistance < 12)
       {
         // Serial.println("at back right");
         rightMotorMoveBack(255);
@@ -71,9 +71,9 @@ void decideTheAvoidMotion()
   {
     // Serial.println("Normal mode");
     // nothing in front of the car
-    int leftPMW = map(Rdistance, 0, 100, 50, 255);
-    int rightPMW = map(Ldistance, 0, 100, 50, 255);
-    if (leftPMW < 70 && rightPMW < 70)
+    int leftPMW = map(Rdistance, 0, 100, 50, 230);
+    int rightPMW = map(Ldistance, 0, 100, 50, 230);
+    if (leftPMW < 100 && rightPMW < 100)
     {
       leftMotorMoveFont(200);
       rightMotorMoveFont(200);
